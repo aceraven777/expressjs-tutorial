@@ -10,6 +10,6 @@ Course files for the Express.js Crash Course tutorial series on "Anson the Devel
 2. Inside the application folder run `npm install`
 
 ## Running the application
-Run the command `node app`
+Run the command `npm run start`
 
-Optionally you can install `nodemon` package to automatically restarting the node application when file changes in the directory are detected. Then run the command `nodemon app` to run the application
+Optionally you can install `nodemon` package to automatically restarting the node application when file changes in the directory are detected. Then run the command `npm run start:dev` to run the application

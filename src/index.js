@@ -6,6 +6,11 @@ const PORT = 3001;
 app.use(express.json());
 app.use(express.urlencoded());
 
+app.use((req, res, next) => {
+    console.log(`${req.method}:${req.url}`);
+    next();
+});
+
 app.listen(PORT, () => console.log(`Running Express Server on Port ${PORT}!`));
 
 const groceryList = [
@@ -23,8 +28,17 @@ const groceryList = [
     },
 ];
 
-app.get('/groceries', (req, res) => {
+app.get('/groceries', (req, res, next) => {
+    console.log('Before Handling Request');
+    next();
+}, (req, res, next) => {
     res.send(groceryList);
+    next();
+}, (req, res, next) => {
+    console.log('Finished Executing GET Request');
+    next();
+}, (req, res, next) => {
+    console.log('The end');
 });
 
 app.post('/groceries', (req, res) => {
