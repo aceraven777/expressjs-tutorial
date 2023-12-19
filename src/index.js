@@ -1,4 +1,6 @@
 const express = require('express');
+const groceriesRoute = require('./routes/groceries');
+const marketsRoute = require('./routes/markets');
 
 const app = express();
 const PORT = 3001;
@@ -11,34 +13,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/api/v1/groceries', groceriesRoute);
+app.use('/api/v1/markets', marketsRoute);
+
 app.listen(PORT, () => console.log(`Running Express Server on Port ${PORT}!`));
-
-const groceryList = [
-    {
-        item: 'milk',
-        quantity: 2,
-    },
-    {
-        item: 'cereal',
-        quantity: 1,
-    },
-    {
-        item: 'pop-tarts',
-        quantity: 1,
-    },
-];
-
-app.get('/groceries', (req, res) => {
-    res.send(groceryList);
-});
-
-app.post('/groceries', (req, res) => {
-    groceryList.push(req.body);
-    res.send(201);
-});
-
-app.get('/groceries/:item', (req, res) => {
-    const { item } = req.params;
-    const groceryItem = groceryList.find((g) => g.item === item);
-    res.send(groceryItem);
-});
