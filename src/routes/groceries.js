@@ -36,4 +36,31 @@ router.get('/:item', (req, res) => {
     res.send(groceryItem);
 });
 
+router.get('/shopping/cart', (req, res) => {
+    const { cart } = req.session;
+    
+    if (! cart) {
+        res.send('You have no cart session');
+        return;
+    }
+
+    res.send(cart);
+});
+
+router.post('/shopping/cart/item', (req, res) => {
+    const { item, quantiry } = req.body;
+    const cartItem = { item, quantity };
+    const { cart } = req.session;
+    
+    if (! cart) {
+        req.session.cart = {
+            items: [],
+        };
+    }
+    
+    req.session.cart.items.push(cartItem);
+
+    res.send(201);
+});
+
 module.exports = router;
