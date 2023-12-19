@@ -28,20 +28,17 @@ const groceryList = [
     },
 ];
 
-app.get('/groceries', (req, res, next) => {
-    console.log('Before Handling Request');
-    next();
-}, (req, res, next) => {
+app.get('/groceries', (req, res) => {
     res.send(groceryList);
-    next();
-}, (req, res, next) => {
-    console.log('Finished Executing GET Request');
-    next();
-}, (req, res, next) => {
-    console.log('The end');
 });
 
 app.post('/groceries', (req, res) => {
     groceryList.push(req.body);
     res.send(201);
+});
+
+app.get('/groceries/:item', (req, res) => {
+    const { item } = req.params;
+    const groceryItem = groceryList.find((g) => g.item === item);
+    res.send(groceryItem);
 });
